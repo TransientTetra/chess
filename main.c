@@ -4,6 +4,8 @@
 
 int main(int argc, char const *argv[])
 {
-	SDL2_init();
+	SDL_Init(SDL_INIT_EVERYTHING);
+	SDL_Quit();
+
 	return 0;
 }
