@@ -1,9 +1,12 @@
-#include <SDL2/SDL.h>
-#include <SDL2/SDL_ttf.h>
-#include <stdio.h>
-#include <stdlib.h>
+#include "lib.h"
 
+#ifndef STRUCT
+#define STRUCT
 #include "struct.h"
+#endif
+#include "draw.h"
+#include "memory.h"
+#include "logic.h"
 
 #define SCREEN_WIDTH 300
 #define SCREEN_HEIGHT 300
