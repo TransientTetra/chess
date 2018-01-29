@@ -1,7 +1,7 @@
 #include "lib.h"
 
-//initializes sdl, creates window and screen
-int init(SDL_Window **window, SDL_Surface **screen);
+//initializes sdl, creates window, renderer, screen texture and screen
+int init(SDL_Window **window, SDL_Renderer **renderer, SDL_Texture **scrtex, SDL_Surface **screen);
 
 //loads graphics
 int load_graphics(

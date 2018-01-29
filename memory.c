@@ -1,7 +1,7 @@
 #include "headers.h"
 
 //initializes sdl, creates window and screen
-int init(SDL_Window **window, SDL_Surface **screen)
+int init(SDL_Window **window, SDL_Renderer **renderer, SDL_Texture **scrtex, SDL_Surface **screen)
 {	
 	if (SDL_Init(SDL_INIT_EVERYTHING) < 0)
 	{
@@ -10,18 +10,27 @@ int init(SDL_Window **window, SDL_Surface **screen)
 	}
 
 	*window = SDL_CreateWindow("Chess", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
-	if (window == NULL)
+	if (*window == NULL)
 	{
 		fprintf(stderr, "Window could not be created! SDL_Error: %s\n", SDL_GetError());
 		return 1;
 	}
+
+	*renderer = SDL_CreateRenderer(*window, -1, SDL_RENDERER_ACCELERATED);
+	if (*renderer == NULL)
+	{
+		fprintf(stderr, "Renderer could not be created! SDL Error: %s\n", SDL_GetError());
+		return 1;
+	}
+
+	SDL_SetRenderDrawColor(*renderer, 0xFF, 0xFF, 0xFF, 0xFF);
 
 	*screen = SDL_GetWindowSurface(*window);
 	SDL_ShowCursor(SDL_DISABLE);
 	return 0;
 }
 
-//loads graphics
+//loads bitmaps to sdl surfaces
 int load_graphics(
 	SDL_Surface **pawn_white, const char *pawn_white_location,
 	SDL_Surface **pawn_black, const char *pawn_black_location,
