@@ -8,8 +8,30 @@
 #include "memory.h"
 #include "logic.h"
 
+#define TILE 32
 #define SCREEN_WIDTH 300
 #define SCREEN_HEIGHT 300
+
+#define PAWNX 0
+#define PAWNY 0
+#define KNIGHTX 32
+#define KNIGHTY 0
+#define BISHOPX 64
+#define BISHOPY 0
+#define ROOKX 0
+#define ROOKY 32
+#define QUEENX 32
+#define QUEENY 32
+#define KINGX 64
+#define KINGY 32
+
+#define	PAWN 1
+#define KNIGHT 2
+#define BISHOP 3
+#define ROOK 4
+#define QUEEN 5
+#define KING 6
+
 #define BLUE SDL_MapRGB(screen->format, 0x00, 0x00, 0xFF)
 #define WHITE SDL_MapRGB(screen->format, 0xFF, 0xFF, 0xFF)
 #define BLACK SDL_MapRGB(screen->format, 0x00, 0x00, 0x00)
