@@ -1,5 +1,4 @@
 struct field
 {
-	int something;
-	int sselse;
+	int piece;
 };

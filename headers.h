@@ -9,8 +9,10 @@
 #include "logic.h"
 
 #define TILE 32
-#define SCREEN_WIDTH 300
-#define SCREEN_HEIGHT 300
+#define SCREEN_WIDTH 276
+#define SCREEN_HEIGHT 276
+#define BOARDX 10
+#define BOARDY 10
 
 #define PAWNX 0
 #define PAWNY 0
@@ -25,6 +27,7 @@
 #define KINGX 64
 #define KINGY 32
 
+#define NONE 0
 #define	PAWN 1
 #define KNIGHT 2
 #define BISHOP 3
@@ -37,3 +40,5 @@
 #define BLACK SDL_MapRGB(screen->format, 0x00, 0x00, 0x00)
 #define RED SDL_MapRGB(screen->format, 0xFF, 0x00, 0x00)
 #define GREEN SDL_MapRGB(screen->format, 0x00, 0xFF, 0x00)
+#define DARKBLUE SDL_MapRGB(screen->format, 0x00, 0x00, 0x66)
+#define LIGHTBLUE SDL_MapRGB(screen->format, 0x33, 0x33, 0xFF)
