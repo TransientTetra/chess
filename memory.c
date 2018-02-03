@@ -48,3 +48,59 @@ int load_graphics(
 	}
 	return 0;
 }
+
+//initializes board array with initial chess layout
+void init_board(struct field board[8][8])
+{
+	for (int i = 0; i < 8; ++i)
+	{
+		for (int j = 0; j < 8; ++j)
+		{
+			board[i][j].piece = NONE;
+			board[i][j].color = NONE;
+		}
+	}
+
+	for (int i = 0; i < 8; ++i)
+	{
+			board[1][i].piece = PAWN;
+			board[1][i].color = WHITE_PIECE;
+			board[6][i].piece = PAWN;
+			board[6][i].color = BLACK_PIECE;
+			if (i == 0 || i == 7)
+			{
+				board[0][i].piece = ROOK;
+				board[0][i].color = WHITE_PIECE;
+				board[7][i].piece = ROOK;
+				board[7][i].color = BLACK_PIECE;
+			}
+			if (i == 1 || i == 6)
+			{
+				board[0][i].piece = KNIGHT;
+				board[0][i].color = WHITE_PIECE;
+				board[7][i].piece = KNIGHT;
+				board[7][i].color = BLACK_PIECE;
+			}
+			if (i == 2 || i == 5)
+			{
+				board[0][i].piece = BISHOP;
+				board[0][i].color = WHITE_PIECE;
+				board[7][i].piece = BISHOP;
+				board[7][i].color = BLACK_PIECE;
+			}
+			if (i == 3)
+			{
+				board[0][i].piece = KING;
+				board[0][i].color = WHITE_PIECE;
+				board[7][i].piece = KING;
+				board[7][i].color = BLACK_PIECE;
+			}
+			if (i == 4)
+			{
+				board[0][i].piece = QUEEN;
+				board[0][i].color = WHITE_PIECE;
+				board[7][i].piece = QUEEN;
+				board[7][i].color = BLACK_PIECE;
+			}
+	}
+}

@@ -43,6 +43,6 @@
 #define BLACK SDL_MapRGB(screen->format, 0x00, 0x00, 0x00)
 #define RED SDL_MapRGB(screen->format, 0xFF, 0x00, 0x00)
 #define GREEN SDL_MapRGB(screen->format, 0x00, 0xFF, 0x00)
-#define ORANGE SDL_MapRGB(screen->format, 0xFF, 0x80, 0x00)
+#define ORANGE SDL_MapRGB(screen->format, 0xFF, 0x83, 0x00)
 #define DARKBLUE SDL_MapRGB(screen->format, 0x00, 0x00, 0x66)
 #define LIGHTBLUE SDL_MapRGB(screen->format, 0x33, 0x33, 0xFF)
