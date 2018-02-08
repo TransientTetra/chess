@@ -18,3 +18,5 @@ void draw_board(
 	SDL_Surface *screen,
 	SDL_Surface *white_pieces, SDL_Surface *black_pieces,
 	Uint32 dark_color, Uint32 light_color, Uint32 pointer_color);
+
+void draw_possible_moves(struct field board[8][8], SDL_Surface *screen, int x, int y, Uint32 color);

@@ -27,6 +27,7 @@
 #define KINGX 64
 #define KINGY 32
 
+#define NO_COLOR -1
 #define WHITE_PIECE 0
 #define BLACK_PIECE 1
 

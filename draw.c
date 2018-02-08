@@ -92,7 +92,7 @@ void draw_board(
 				modulo2_draw_rect(j, &tile, screen, dark_color, light_color);
 			}
 
-			if (j == pointer.x && i == pointer.y)
+			if (i == pointer.x && j == pointer.y)
 			{
 				SDL_FillRect(screen, &tile, pointer_color);
 
@@ -135,6 +135,26 @@ void draw_board(
 			else
 			{
 				draw_sprite(board[i][j].piece, black_pieces, screen, 10 + j * TILE, 10 + i * TILE, TILE, TILE);
+			}
+		}
+	}
+}
+
+void draw_possible_moves(struct field board[8][8], SDL_Surface *screen, int x, int y, Uint32 color)
+{
+	for (int i = 0; i < 8; ++i)
+	{
+		for (int j = 0; j < 8; ++j)
+		{
+			SDL_Rect tile;
+			tile.x = BOARDX + 12 + j * TILE;
+			tile.y = BOARDY + 12 + i * TILE;
+			tile.w = TILE - 24;
+			tile.h = TILE - 24;
+			
+			if (board[x][y].possible[i][j] == 1)
+			{						
+				SDL_FillRect(screen, &tile, color);
 			}
 		}
 	}

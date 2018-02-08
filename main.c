@@ -1,15 +1,18 @@
 #include "headers.h"
 
 //todo:
-
+//pieces can move when near the edge 
+//pawns can beat pawns or pieces of the same color
+//sometimes when attempting to execute program seg fault
+//finish rook
 
 int main(int argc, char const *argv[])
 {
 	struct field board[8][8];
 
-	struct point pointer;
-	pointer.x = 0;
-	pointer.y = 0;
+	struct point cursor;
+	cursor.x = 0;
+	cursor.y = 0;
 	short int quit = 0;
 	SDL_Event event;
 	SDL_Window *window = NULL;
@@ -32,11 +35,25 @@ int main(int argc, char const *argv[])
 		return 1;
 	}
 
+	struct field temp_field;
+	struct point temp;
+	temp.x = NONE;
+	temp.y = NONE;
+	temp_field.piece = NONE;
+	temp_field.color = NO_COLOR;
+	short int picked_up = 0;
+
 	init_board(board);
+	set_possible_moves(board);
 
 	while (quit == 0)
 	{
-		draw_board(board, pointer, screen, white_pieces, black_pieces, DARKBLUE, LIGHTBLUE, ORANGE);
+		draw_board(board, cursor, screen, white_pieces, black_pieces, DARKBLUE, LIGHTBLUE, ORANGE);
+		
+		if (picked_up == 1)
+		{
+			draw_possible_moves(board, screen, temp.x, temp.y, ORANGE);
+		}
 		SDL_UpdateWindowSurface(window);
 
 		while(SDL_PollEvent(&event) != 0)
@@ -53,30 +70,72 @@ int main(int argc, char const *argv[])
 							quit = 1;
 							break;
 						case SDLK_RETURN:
-							printf("%d %d\n", board[pointer.y][pointer.x].piece, board[pointer.y][pointer.x].color);
+							if (picked_up == 0)
+							{
+								set_possible_moves(board);
+								if (board[cursor.x][cursor.y].piece != NONE)
+								{
+									choose_piece(board, cursor, &temp_field, &temp);
+									picked_up = 1;
+								}
+								else
+								{
+									temp.x = NONE;
+									temp.y = NONE;
+								}
+							}							
+							else if (picked_up == 1)
+							{
+								if (board[temp.x][temp.y].possible[cursor.x][cursor.y] == 1)
+								{
+									replace_with_chosen(board, cursor, &temp_field, &temp);
+								}
+								else
+								{
+									temp.x = NONE;
+									temp.y = NONE;
+								}
+								picked_up = 0;
+							}
 							break;
 						case SDLK_UP:
-							if (pointer.y > 0)
+							if (cursor.x > 0)
 							{
-								--pointer.y;
+								--cursor.x;
+							}
+							else
+							{
+								cursor.x = 7;
 							}
 							break;
 						case SDLK_DOWN:
-							if (pointer.y < 7)
+							if (cursor.x < 7)
 							{
-								++pointer.y;
+								++cursor.x;
+							}
+							else
+							{
+								cursor.x = 0;
 							}
 							break;
 						case SDLK_LEFT:
-							if (pointer.x > 0)
+							if (cursor.y > 0)
 							{
-								--pointer.x;
+								--cursor.y;
+							}
+							else
+							{
+								cursor.y = 7;
 							}
 							break;
 						case SDLK_RIGHT:
-							if (pointer.x < 7)
+							if (cursor.y < 7)
 							{
-								++pointer.x;
+								++cursor.y;
+							}
+							else
+							{
+								cursor.y = 0;
 							}
 							break;
 					}

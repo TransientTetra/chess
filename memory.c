@@ -57,7 +57,7 @@ void init_board(struct field board[8][8])
 		for (int j = 0; j < 8; ++j)
 		{
 			board[i][j].piece = NONE;
-			board[i][j].color = NONE;
+			board[i][j].color = NO_COLOR;
 		}
 	}
 
