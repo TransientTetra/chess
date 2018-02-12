@@ -1,10 +1,7 @@
 #include "headers.h"
 
 //todo:
-//pieces can move when near the edge 
-//pawns can beat pawns or pieces of the same color
-//sometimes when attempting to execute program seg fault
-//finish rook
+//change possible to one shared array
 
 int main(int argc, char const *argv[])
 {

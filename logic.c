@@ -51,62 +51,140 @@ void set_possible_moves(struct field board[8][8])
 						pawn_filter(board, i, j, -1, 6);
 					}
 					break;
-				case KNIGHT:
-					ez_filter(board, i, j, 2, 1);
-					ez_filter(board, i, j, 2, -1);
-					ez_filter(board, i, j, -2, 1);
-					ez_filter(board, i, j, -2, -1);
-					ez_filter(board, i, j, 1, 2);
-					ez_filter(board, i, j, -1, 2);
-					ez_filter(board, i, j, 1, -2);
-					ez_filter(board, i, j, -1, -2);
+				case ROOK:
+					parallel_filter(board, i, j);
+					break;
+				case BISHOP:
+					diagonal_filter(board, i, j);
+					break;
+				case QUEEN:
+					diagonal_filter(board, i, j);
+					parallel_filter(board, i, j);
 					break;
 				case KING:
-					ez_filter(board, i, j, 1, 0);
-					ez_filter(board, i, j, 1, 1);
-					ez_filter(board, i, j, 1, -1);
-					ez_filter(board, i, j, 0, 1);
-					ez_filter(board, i, j, 0, -1);
-					ez_filter(board, i, j, -1, 0);
-					ez_filter(board, i, j, -1, -1);
-					ez_filter(board, i, j, -1, 1);
-					break;
-				case ROOK:
-					for (int k = i + 1; k < 8; ++k)
+					for (int i = 0; i < 8; ++i)
 					{
-						if (rook_filter(board, i, j, k, j) != 0)
-						{
-							break;
-						}
+						/* code */
 					}
-					for (int k = i - 1; k >= 0; --k)
-					{
-						if (rook_filter(board, i, j, k, j) != 0)
-						{
-							break;
-						}
-					}
-					for (int k = j + 1; k < 8; ++k)
-					{
-						if (rook_filter(board, i, j, i, k) != 0)
-						{
-							break;
-						}
-					}
-					for (int k = j - 1; k >= 0; --k)
-					{
-						if (rook_filter(board, i, j, i, k) != 0)
-						{
-							break;
-						}
-					}
-					break;
 			}
 		}
 	}
 }
 
-int rook_filter(struct field board[8][8], int a, int b, int c, int d)
+void diagonal_filter(struct field board[8][8], int i, int j)
+{
+	for (int k = i + 1; k < 8; ++k)
+	{
+		short int brk = 0;
+		for (int l = j + 1; l < 8; ++l)
+		{
+			if (k - i == l - j)
+			{
+				if (general_filter(board, i, j, k, l) == 1)
+				{
+					brk = 1;
+					break;
+				}
+			}
+		}
+		if (brk != 0)
+		{
+			break;
+		}
+	}
+	for (int k = i - 1; k >= 0; --k)
+	{
+		short int brk = 0;
+		for (int l = j - 1; l >= 0; --l)
+		{
+			if (k - i == l - j)
+			{
+				if (general_filter(board, i, j, k, l) == 1)
+				{
+					brk = 1;
+					break;
+				}
+			}
+		}
+		if (brk != 0)
+		{
+			break;
+		}
+	}
+	for (int k = i + 1; k < 8; ++k)
+	{
+		short int brk = 0;
+		for (int l = j - 1; l >= 0; --l)
+		{
+			if (k - i == j - l)
+			{
+				if (general_filter(board, i, j, k, l) == 1)
+				{
+					brk = 1;
+					break;
+				}
+			}
+		}
+		if (brk != 0)
+		{
+			break;
+		}
+	}
+	for (int k = i - 1; k >= 0; --k)
+	{
+		short int brk = 0;
+		for (int l = j + 1; l < 8; ++l)
+		{
+			if (i - k == l - j)
+			{
+				if (general_filter(board, i, j, k, l) == 1)
+				{
+					brk = 1;
+					break;
+				}
+			}
+		}
+		if (brk != 0)
+		{
+			break;
+		}
+	}
+}
+
+void parallel_filter(struct field board[8][8], int i, int j)
+{
+	for (int k = i + 1; k < 8; ++k)
+	{
+		if (general_filter(board, i, j, k, j) != 0)
+		{
+			break;
+		}
+	}
+	for (int k = i - 1; k >= 0; --k)
+	{
+		if (general_filter(board, i, j, k, j) != 0)
+		{
+			break;
+		}
+	}
+	for (int k = j + 1; k < 8; ++k)
+	{
+		if (general_filter(board, i, j, i, k) != 0)
+		{
+			break;
+		}
+	}
+	for (int k = j - 1; k >= 0; --k)
+	{
+		if (general_filter(board, i, j, i, k) != 0)
+		{
+			break;
+		}
+	}
+
+}
+
+int general_filter(struct field board[8][8], int a, int b, int c, int d)
 {
 	if (board[c][d].piece == NONE)
 	{
@@ -124,34 +202,32 @@ int rook_filter(struct field board[8][8], int a, int b, int c, int d)
 	return 0;
 }
 
-void ez_filter(struct field board[8][8], int i, int j, int vertical, int horizontal)
-{
-	if (board[i + vertical][j + horizontal].color != board[i][j].color)
-	{
-		board[i][j].possible[i + vertical][j + horizontal] = 1;
-	}
-}
-
-void pawn_filter(struct field board[8][8], int i, int j, int color, int row)
+void pawn_filter(struct field board[8][8], int i, int j, int vertical, int row)
 {	
-	if (board[i + color][j].piece == NONE)
+	if (board[i + vertical][j].piece == NONE)
 	{
-		board[i][j].possible[i + color][j] = 1;
+		board[i][j].possible[i + vertical][j] = 1;
 		if (i == row)
 		{
-			if (board[i + 2 * color][j].piece == NONE)
+			if (board[i + 2 * vertical][j].piece == NONE)
 			{
-				board[i][j].possible[i + 2 * color][j] = 1;
+				board[i][j].possible[i + 2 * vertical][j] = 1;
 			}
 		}
 	}
-	if (board[i + color][j + 1].piece != NONE)
+	if (j < 7)
 	{
-		board[i][j].possible[i + color][j + 1] = 1;
+		if (board[i + vertical][j + 1].piece != NONE && board[i + vertical][j + 1].color != board[i][j].color)
+		{
+			board[i][j].possible[i + vertical][j + 1] = 1;
+		}		
 	}
-	if (board[i + color][j - 1].piece != NONE)
+	if (j > 0)
 	{
-		board[i][j].possible[i + color][j - 1] = 1;
+		if (board[i + vertical][j - 1].piece != NONE && board[i + vertical][j - 1].color != board[i][j].color)
+		{
+			board[i][j].possible[i + vertical][j - 1] = 1;
+		}
 	}
 }
 

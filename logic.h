@@ -16,8 +16,10 @@ void zero_possible_moves(struct field board[8][8]);
 
 void set_possible_moves(struct field board[8][8]);
 
-void pawn_filter(struct field board[8][8], int i, int j, int color, int row);
+void pawn_filter(struct field board[8][8], int i, int j, int vertical, int row);
 
-void ez_filter(struct field board[8][8], int i, int j, int vertical, int horizontal);
+int general_filter(struct field board[8][8], int a, int b, int c, int d);
 
-int rook_filter(struct field board[8][8], int a, int b, int c, int d);
+void parallel_filter(struct field board[8][8], int i, int j);
+
+void diagonal_filter(struct field board[8][8], int i, int j);
